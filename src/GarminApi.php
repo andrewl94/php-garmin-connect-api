@@ -62,7 +62,7 @@ class GarminApi extends Server
      * @param TemporaryCredentials|string $temporaryIdentifier
      * @return string
      */
-    public function getAuthorizationUrl($temporaryIdentifier): string
+    public function getAuthorizationUrl($temporaryIdentifier, array $options = []): string
     {
         // Somebody can pass through an instance of temporary
         // credentials and we'll extract the identifier from there.
@@ -91,7 +91,7 @@ class GarminApi extends Server
      * @throws GuzzleException
      * @throws InvalidArgumentException
      */
-    public function getTokenCredentials(TemporaryCredentials $temporaryCredentials, string $temporaryIdentifier, string $verifier): TokenCredentials
+    public function getTokenCredentials(TemporaryCredentials $temporaryCredentials, $temporaryIdentifier, $verifier)
     {
         if ($temporaryIdentifier !== $temporaryCredentials->getIdentifier()) {
             throw new \InvalidArgumentException(
@@ -129,7 +129,7 @@ class GarminApi extends Server
      * @param array $bodyParameters
      * @return string
      */
-    protected function protocolHeader(string $method, string $uri, CredentialsInterface $credentials, array $bodyParameters = array()): string
+    protected function protocolHeader($method, $uri, CredentialsInterface $credentials, array $bodyParameters = [])
     {
         $parameters = array_merge(
             $this->baseProtocolParameters(),
